@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script type="text/javascript">
+  tinymce.init({
+    selector: '.new',
+    inline: true
+  });
+  </script>
+</head>
+
+<body>
+  <h1>TinyMCE Inline Editing Mode Guide</h1>
+  <form method="post">
+    <input type="submit" />
+    <div id="myeditablediv" class="new">Click here to edit!</div>
+    <div class="new">
+        new1
+    </div>
+    <div class="new">
+        new2
+    </div>
+  </form>
+</body>
+</html>
