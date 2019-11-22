@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,28 +9,41 @@
 
     <script src="../js/vue.min.js"></script>
 </head>
+
 <body>
 
-    <div id="vue_det">
-        <h1>site : {{site}}</h1>
-        <h1>url : {{url}}</h1>
-        <h1>{{details()}}</h1>
+    <div id="app">
     </div>
-    <script type="text/javascript">
+
+    <script>
         var vm = new Vue({
-            el: '#vue_det',
+            el: '#app',
             data: {
-                site: "菜鸟教程",
-                url: "www.runoob.com",
-                alexa: "10000"
+                name: 'Google',
+                url: 'http://www.google.com'
             },
-            methods: {
-                details: function () {
-                    return this.site + " - 学的不仅是技术，更是梦想！";
+            computed: {
+                site: {
+                    // getter
+                    get: function () {
+                        return this.name + ' ' + this.url
+                    },
+                    // setter
+                    set: function (newValue) {
+                        var names = newValue.split(' ')
+                        this.name = names[0]
+                        this.url = names[names.length - 1]
+                    }
                 }
             }
         })
+        // 调用 setter， vm.name 和 vm.url 也会被对应更新
+        vm.site = '菜鸟教程 http://www.runoob.com';
+        document.write('name: ' + vm.name);
+        document.write('<br>');
+        document.write('url: ' + vm.url);
     </script>
-    
+
 </body>
+
 </html>
