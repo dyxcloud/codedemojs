@@ -1,13 +1,16 @@
-
-
+//v0.6 更新正则表达式, 适配b站新的BV号, 去掉了原来AV号的后发断言
 
 var reWatch = /watchlater\/#/
-var reP = /(?<=av\d+)\/p(?=\d+)/
+var reP = /\/p(?=\d+)/
 /**
  * @description 转换url
  * www.bilibili.com/watchlater/#/av75216330/p2 
  * to 
  * www.bilibili.com/video/av75216330?p=2
+ * 
+ * www.bilibili.com/watchlater/#/BV1mE411F7tV/p1
+ * to
+ * www.bilibili.com/video/BV1mE411F7tV?p=1
  */
 function transUrl(str){
     str = str.replace(reWatch, "video");
@@ -30,9 +33,9 @@ function trans() {
 
 var timesRun = 0;
 var timer = setInterval(function(){
-    if(timesRun >= 3){    
+    if(timesRun >= 6){    
         clearInterval(timer);    
     }
     timesRun++;
     trans();
-},2000);
+},500);
