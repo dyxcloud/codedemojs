@@ -65,6 +65,12 @@ a.innerText = '点击复制图片';
 a.onclick = function(){ main(this); }
 
 
+/**
+ * 思路:
+ * 获取标题和url
+ * 跳转到i.nhentai.net
+ * fetch获取数据, 并打包, 下载
+ */
 
 
 //https://nhentai.net/g/307036/
