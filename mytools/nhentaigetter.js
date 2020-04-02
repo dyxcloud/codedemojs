@@ -1,5 +1,14 @@
 
 /**
+ * 获取页面漫画标题
+ */
+function getTitle(){
+    var h2 = document.querySelector('#info > h2');
+    var text = h2.innerHTML;
+    return text;
+}
+
+/**
  * 缩略图url转为大图url
  * @param {string} url 
  */
@@ -10,48 +19,53 @@ function transUrl(url){
     return url;
 }
 
-/**
- * 从文件url来获取文件名
- * @param {string} url 
- */
-function getFileName(url){
-    var urlarr = url.split('?');
-    var sp = urlarr[0].split('/');
-    return sp[sp.length-1];
+function getAllUrl(){
+    var imgs = document.querySelectorAll('.gallerythumb > img');
+    var result = '';
+    for(var img of imgs){
+        var src = img.getAttribute('data-src');
+        src = transUrl(src);
+        result +=  (src + '\r\n');
+    }
+    console.log(result);
+    return result;
+}
+
+function copyText(text){
+    var ta = document.getElementById('ta')
+    if(ta){
+        ta.innerHTML = '';
+    }else{
+        ta = document.createElement('textarea');
+        ta.style="width:800px;height:200px";
+        ta.id = 'ta';
+        var comments = document.querySelector('#comment-container');
+        comments.appendChild(ta);
+    }
+    ta.innerHTML = text;
+    ta.select();
+    console.log('copy='+document.execCommand('copy'));
 }
 
 /**
- * 获取页面漫画标题
+ * 入口函数
  */
-function getTitle(){
-    var h2 = document.querySelector('#info > h2');
-    var text = h2.innerHTML;
-    return text;
+function main(self){
+    console.log(getTitle());
+    copyText(getAllUrl());
+    self.innerText = '复制完成';
+    var event = event || window.event;
+    event.preventDefault();
 }
 
-/**
- * 调用浏览器下载功能
- * @param {string} url 
- */
-function download(url){
-    var filename = getFileName(url);
-    fetch(url,{
-        mode: "no-cors"
-    }).then(res => res.blob().then(blob => {
-        var a = document.createElement('a');
-        var url = window.URL.createObjectURL(blob);
-        a.href = url;
-        a.download = filename;
-        a.click();
-        window.URL.revokeObjectURL(url);
-    }));
-}
+var topmenus = document.querySelectorAll('.desktop');
+var info = topmenus[topmenus.length-1];
+var a = info.querySelector('a');
+a.innerText = '点击复制图片';
+a.onclick = function(){ main(this); }
 
 
-console.log(getTitle());
-var imgs = document.querySelectorAll('.gallerythumb > img');
-for(var img of imgs){
-    var src = img.getAttribute('data-src');
-    src = transUrl(src);
-    download(src);
-}
+
+
+//https://nhentai.net/g/307036/
+
