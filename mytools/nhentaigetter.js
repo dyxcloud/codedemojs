@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         nhentai图片批量下载
 // @namespace    https://github.com/dyxcloud
-// @version      0.1
+// @version      0.20
 // @description  解析nhentai页面的漫画url, 可以复制所有大图连接, 或者打包下载zip
 // @author       dyxlike
 // @match        https://nhentai.net/g/*
@@ -32,7 +32,6 @@ function getFileName(url){
     var urlarr = url.split('?');
     var sp = urlarr[0].split('/');
     var result = sp[sp.length-1];
-    console.log('解析出一个文件名:'+result);
     return result;
 }
 
@@ -113,9 +112,9 @@ function GMFetch(url){
             onload : function(re){
                 var blob = re.response; //TODO 此处必须先获取到blob对象再赋值
                 blob.name = getFileName(url);
-                console.log('获取到请求响应'+blob);
                 console.log('获取到请求响应'+blob.size);
                 console.log('获取到请求响应'+blob.name);
+                setTextById('azip', '下载中:' + (++pageCount) + '/' + pageNum);
                 resolve(blob);
             },
             onerror:function(){
@@ -133,21 +132,34 @@ function pack(blobs) {
     console.log('获取到blob个数:'+blobs.length);
     const zip = new JSZip();
     blobs.forEach((blob) => zip.file(blob.name, blob));
+    setTextById('azip','打包中');
     return zip.generateAsync({type : "blob"});
 }
 
+var pageNum = 0;
+var pageCount = 0;
 
-function mainDownloadZip(self){
+function mainDownloadZip(){
     var urls = getAllUrl();
+    pageNum = urls.length;
     fetchBlobs(urls).then(pack).then((zipblob) => {
         saveAs(zipblob, getTitle() + ".zip");
+        setTextById('azip','下载完成');
     });
     
-    self.innerText = '下载完成';
     // var event = event || window.event;
     // event.preventDefault();
 }
 
+/**
+ * 设置按钮的文本
+ * @param {string} id 
+ * @param {string} text 
+ */
+function setTextById(id, text){
+    var a = document.querySelector('#'+id);
+    a.innerText = text;
+}
 
 
 
@@ -156,13 +168,15 @@ function mainDownloadZip(self){
 var topmenus = document.querySelectorAll('.desktop');
 var info = topmenus[topmenus.length-1];
 var a = info.querySelector('a');
+a.id = 'aurl';
 a.innerText = '点击复制图片链接';
 a.onclick = function(){ mainCopy(this);return false; }
 //生成下载按钮
 var cloneN = info.cloneNode(true);
 a = cloneN.querySelector('a');
+a.id = 'azip';
 a.innerText = '点击打包下载';
-a.onclick = function(){ mainDownloadZip(this);return false; }
+a.onclick = function(){ mainDownloadZip();return false; }
 info.parentNode.appendChild(cloneN);
 
 
