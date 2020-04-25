@@ -1,7 +1,22 @@
+// ==UserScript==
+// @name         b站稍后再看链接替换
+// @version      0.70
+// @description  稍后再看链接替换
+// @author       dyxlike
+// @match        https://www.bilibili.com/watchlater/
+// @grant        none
+// @namespace https://github.com/dyxcloud
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+
+//v0.7 更精确的链接替换范围
 //v0.6 更新正则表达式, 适配b站新的BV号, 去掉了原来AV号的后发断言
 
-var reWatch = /watchlater\/#/
-var reP = /\/p(?=\d+)/
+const reWatch = /watchlater\/#/
+const reP = /\/p(?=\d+)/
 /**
  * @description 转换url
  * www.bilibili.com/watchlater/#/av75216330/p2 
@@ -18,24 +33,33 @@ function transUrl(str){
     return str;
 }
 
+function getTargets(){
+    let result =document.querySelectorAll('a.av-pic,.av-about>a');
+    console.log(result.length);
+    return result;
+}
+
 function trans() {
-    var elements = document.getElementsByTagName('a');
-    console.log("get " + elements.length + " <a>:")
-    for (var i = 0; i < elements.length; i++) {
-        var str = elements[i].getAttribute("href");
+    let elements = getTargets();
+    for (let e of elements) {
+        let str = e.getAttribute("href");
         if (str != null && str.indexOf("/watchlater/#") != -1) {
             console.log("geted!!" + str);
-            elements[i].setAttribute('href', transUrl(str));
-            elements[i].setAttribute('target', "_blank");
+            e.setAttribute('href', transUrl(str));
+            e.setAttribute('target', "_blank");
         }
     }
 }
 
-var timesRun = 0;
-var timer = setInterval(function(){
+let timesRun = 0;
+let timer = setInterval(function(){
     if(timesRun >= 6){    
         clearInterval(timer);    
     }
     timesRun++;
     trans();
 },500);
+
+
+
+})();
