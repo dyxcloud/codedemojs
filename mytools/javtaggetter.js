@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         jav tag copy
 // @namespace    https://github.com/dyxcloud
-// @version      0.1
+// @version      0.3
 // @description  获取页面的tag,返回带tag的文件名 "番号标题 #tag1 #tag2.."
 // @author       dyxlike
 // @match        http://www.g46e.com/*
@@ -49,7 +49,7 @@ function javbusGetter(){
     result+=title;
 
     //获取start
-    let starAs = document.querySelectorAll('span.genre > a[href*="https://www.javbus.com/star/');
+    let starAs = document.querySelectorAll('span.genre > a[href*="/star/');
     console.log(starAs.length);
     for(let a of starAs){
         console.log("star="+a.text);
@@ -57,7 +57,7 @@ function javbusGetter(){
     }
 
     //获取tag
-    let tagAs = document.querySelectorAll('span.genre > a[href*="https://www.javbus.com/genre/');
+    let tagAs = document.querySelectorAll('span.genre > a[href*="/genre/');
     console.log(tagAs.length);
     for(let a of tagAs){
         console.log("tag="+a.text);
