@@ -26,17 +26,23 @@ function javlibGetter(){
     //获取start
     let starAs = document.querySelectorAll('span.star > a');
     console.log(starAs.length);
-    for(let a of starAs){
-        console.log("star="+a.text);
-        result+=(" #"+a.text);
+    if (starAs.length > 0) {
+        result += " ";
+        for(let a of starAs){
+            console.log("star="+a.text);
+            result+=("#"+a.text);
+        }
     }
 
     //获取tag
     let tagAs = document.querySelectorAll('span.genre > a');
     console.log(tagAs.length);
-    for(let a of tagAs){
-        console.log("tag="+a.text);
-        result+=(" #"+a.text);
+    if(tagAs.length>0){
+        result += " ";
+        for(let a of tagAs){
+            console.log("tag="+a.text);
+            result+=("#"+a.text);
+        }
     }
     return result;
 }
@@ -51,17 +57,23 @@ function javbusGetter(){
     //获取start
     let starAs = document.querySelectorAll('span.genre > a[href*="/star/');
     console.log(starAs.length);
-    for(let a of starAs){
-        console.log("star="+a.text);
-        result+=(" #"+a.text);
+    if (starAs.length > 0) {
+        result += " ";
+        for(let a of starAs){
+            console.log("star="+a.text);
+            result+=("#"+a.text);
+        }
     }
 
     //获取tag
     let tagAs = document.querySelectorAll('span.genre > a[href*="/genre/');
     console.log(tagAs.length);
-    for(let a of tagAs){
-        console.log("tag="+a.text);
-        result+=(" #"+a.text);
+    if(tagAs.length>0){
+        result += " ";
+        for(let a of tagAs){
+            console.log("tag="+a.text);
+            result+=("#"+a.text);
+        }
     }
     return result;
 }
