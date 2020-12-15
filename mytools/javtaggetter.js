@@ -8,6 +8,7 @@
 // @match        http://javlib.com/*
 // @match        http://www.javlibrary.com/*
 // @match        https://www.javbus.com/*
+// @match        https://avsox.website/*
 // @grant        GM_setClipboard
 // ==/UserScript==
 
@@ -47,6 +48,19 @@ function javlibGetter(){
     return result;
 }
 
+function javlib(){
+    let avname = document.createElement('a');
+    avname.innerText='点击复制tag文件名';
+    avname.href="#";
+    let video_info = document.querySelector('#video_info');
+    video_info.append(avname);
+
+    avname.onclick = function () {
+        let result = javlibGetter();
+        GM_setClipboard(result);
+    };
+}
+
 function javbusGetter(){
     let result = '';
     //获取标题
@@ -78,19 +92,6 @@ function javbusGetter(){
     return result;
 }
 
-function javlib(){
-    let avname = document.createElement('a');
-    avname.innerText='点击复制tag文件名';
-    avname.href="#";
-    let video_info = document.querySelector('#video_info');
-    video_info.append(avname);
-
-    avname.onclick = function () {
-        let result = javlibGetter();
-        GM_setClipboard(result);
-    };
-}
-
 function javbus(){
     let avname = document.createElement('a');
     avname.innerText='点击复制tag文件名';
@@ -103,13 +104,62 @@ function javbus(){
         GM_setClipboard(result);
     };
 }
+
+function avsoxGetter(){
+    let result = '';
+    //获取标题
+    let title = document.querySelector('body > div.container > h3').innerText;
+    console.log("title="+title);
+    result+=title;
+
+    //获取start
+    let starAs = document.querySelectorAll('#avatar-waterfall > a');
+    console.log(starAs.length);
+    if (starAs.length > 0) {
+        result += " ";
+        for(let a of starAs){
+            let span = a.children[1];
+            console.log("star="+span.text);
+            result+=("#"+span.text);
+        }
+    }
+
+    //获取tag
+    let tagSpans = document.querySelectorAll('.genre');
+    console.log(tagSpans.length);
+    if(tagSpans.length>0){
+        result += " ";
+        for(let sp of tagSpans){
+            let a = sp.children[0];
+            console.log("tag="+a.text);
+            result+=("#"+a.text);
+        }
+    }
+    return result;
+}
+
+function avsox(){
+    let avname = document.createElement('a');
+    avname.innerText='点击复制tag文件名';
+    avname.href="#";
+    let video_info = document.querySelector('div."col-md-3 info"');
+    video_info.append(avname);
+
+    avname.onclick = function () {
+        let result = avsoxGetter();
+        GM_setClipboard(result);
+    };
+}
+
     
 function main(){
     let title = document.title;
-    if ((/JAVLib/g).test(title)){
+    if ((/JAVLib/g).test(title)) {
         javlib();
-    }else if((/JavBus/g).test(title)){
+    } else if ((/JavBus/g).test(title)) {
         javbus();
+    } else if ((/avsox/g).test(title)) {
+        avsox();
     }
 }
 
