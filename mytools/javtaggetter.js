@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         jav tag copy
 // @namespace    https://github.com/dyxcloud
-// @version      0.3
+// @version      0.5.1
 // @description  获取页面的tag,返回带tag的文件名 "番号标题 #tag1 #tag2.."
 // @author       dyxlike
 // @match        http://www.g46e.com/*
@@ -119,8 +119,8 @@ function avsoxGetter(){
         result += " ";
         for(let a of starAs){
             let span = a.children[1];
-            console.log("star="+span.text);
-            result+=("#"+span.text);
+            console.log("star="+span.innerText);
+            result+=("#"+span.innerText);
         }
     }
 
@@ -135,6 +135,7 @@ function avsoxGetter(){
             result+=("#"+a.text);
         }
     }
+    result+=("#无码");
     return result;
 }
 
@@ -142,7 +143,7 @@ function avsox(){
     let avname = document.createElement('a');
     avname.innerText='点击复制tag文件名';
     avname.href="#";
-    let video_info = document.querySelector('div."col-md-3 info"');
+    let video_info = document.querySelector("div.col-md-3.info");
     video_info.append(avname);
 
     avname.onclick = function () {
@@ -158,7 +159,7 @@ function main(){
         javlib();
     } else if ((/JavBus/g).test(title)) {
         javbus();
-    } else if ((/avsox/g).test(title)) {
+    } else if ((/AVSOX/g).test(title)) {
         avsox();
     }
 }
