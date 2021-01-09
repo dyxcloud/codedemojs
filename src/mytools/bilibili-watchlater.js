@@ -15,14 +15,14 @@
 //v0.7 更精确的链接替换范围
 //v0.6 更新正则表达式, 适配b站新的BV号, 去掉了原来AV号的后发断言
 
-const reWatch = /watchlater\/#/
-const reP = /\/p(?=\d+)/
+const reWatch = /watchlater\/#/;
+const reP = /\/p(?=\d+)/;
 /**
  * @description 转换url
- * www.bilibili.com/watchlater/#/av75216330/p2 
- * to 
+ * www.bilibili.com/watchlater/#/av75216330/p2
+ * to
  * www.bilibili.com/video/av75216330?p=2
- * 
+ *
  * www.bilibili.com/watchlater/#/BV1mE411F7tV/p1
  * to
  * www.bilibili.com/video/BV1mE411F7tV?p=1
@@ -43,7 +43,7 @@ function trans() {
     let elements = getTargets();
     for (let e of elements) {
         let str = e.getAttribute("href");
-        if (str != null && str.indexOf("/watchlater/#") != -1) {
+        if (str != null && str.indexOf("/watchlater/#") !== -1) {
             console.log("geted!!" + str);
             e.setAttribute('href', transUrl(str));
             e.setAttribute('target', "_blank");
@@ -53,8 +53,8 @@ function trans() {
 
 let timesRun = 0;
 let timer = setInterval(function(){
-    if(timesRun >= 6){    
-        clearInterval(timer);    
+    if(timesRun >= 6){
+        clearInterval(timer);
     }
     timesRun++;
     trans();
