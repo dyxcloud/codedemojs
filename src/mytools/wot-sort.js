@@ -20,13 +20,13 @@
      */
     function sort(type) {
         let intType;
-        if (type == "65") {
+        if (type === "65") {
             intType = 4;
-        } else if (type == "85") {
+        } else if (type === "85") {
             intType = 5;
-        } else if (type == "95") {
+        } else if (type === "95") {
             intType = 6;
-        } else if (type == "100") {
+        } else if (type === "100") {
             intType = 7;
         } else {
             return;
@@ -49,7 +49,7 @@
 
     const reg = /\d+/;
     function getScore(rowTag,intType){
-        let param = rowTag.children[intType].innerHTML
+        let param = rowTag.children[intType].innerHTML;
         if(!reg.test(param)){
             return 0;
         }
