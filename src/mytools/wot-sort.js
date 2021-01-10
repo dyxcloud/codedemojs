@@ -134,16 +134,18 @@
                         titleE.innerHTML += ("\n发现未映射坦克名称:" + tankName);
                     }
                 }
+                let isGold = false;
                 for (let aTankJson of JSON_TANKS) {
                     if (tankName === aTankJson.name) {
                         if (aTankJson.gold_price > 0) {
-                            let td_element = document.createElement('td');
-                            td_element.innerHTML = "<img src='https://tanks.gg/img/icons/gold.png'  alt />";
-                            tr.appendChild(td_element);
+                            isGold = true;
                         }
                         break;
                     }
                 }
+                let td_element = document.createElement('td');
+                td_element.innerHTML = isGold ? "<img src='https://tanks.gg/img/icons/gold.png'  alt />" : "";
+                tr.appendChild(td_element);
             }
             console.log(mapStr);
         }, 1500);
