@@ -2,7 +2,7 @@
 // @name         坦克世界击杀环标伤数据排序 WOT world of tanks
 // @name:en      World of Tanks Kill ring sort
 // @namespace    https://github.com/dyxcloud
-// @version      0.1.0
+// @version      0.1.1
 // @description  将毛服击杀环的数据进行排序
 // @description:en  Sort the data of Russian service kill ring
 // @author       dyxlike
@@ -135,13 +135,28 @@
                     }
                 }
                 let isGold = false;
-                for (let aTankJson of JSON_TANKS) {
-                    if (tankName === aTankJson.name) {
-                        if (aTankJson.gold_price > 0) {
-                            isGold = true;
+                let findInJson = false;
+                //其他特殊车辆处理
+                if ('FV4202' === tankName) {
+                    findInJson = true;
+                    isGold = true;
+                } else if ('King Tiger (захваченный)' === tankName) {
+                    findInJson = true;
+                    isGold = true;
+                } else {
+                    for (let aTankJson of JSON_TANKS) {
+                        if (tankName === aTankJson.name) {
+                            findInJson = true;
+                            if (aTankJson.gold_price > 0) {
+                                isGold = true;
+                            }
+                            break;
                         }
-                        break;
                     }
+                }
+                if (!findInJson) {
+                    let titleE = document.querySelector(".title-fine.text-center");
+                    titleE.innerHTML += ("\n发现错误坦克名称:" + tankName);
                 }
                 let td_element = document.createElement('td');
                 td_element.innerHTML = isGold ? "<img src='https://tanks.gg/img/icons/gold.png'  alt />" : "";
@@ -237,7 +252,7 @@
         "ИСУ-152К": "ISU-152K",
         "КВ-4 КТТС": "KV-4 KTTS",
         "СУ-101": "SU-101",
-        "СУ-130ПМ": "SU-130M",
+        "СУ-130ПМ": "SU-130PM",
         "Т-103": "T-103",
         "ИС-2-II": "IS-2-II",
         "ИС-3": "IS-3",
