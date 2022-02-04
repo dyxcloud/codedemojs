@@ -1,15 +1,14 @@
 // ==UserScript==
 // @name         jav tag copy
 // @namespace    https://github.com/dyxcloud
-// @version      0.5.1
+// @version      0.5.3
 // @description  获取页面的tag,返回带tag的文件名 "番号标题 #tag1 #tag2.."
 // @author       dyxlike
-// @match        http://www.g46e.com/*
-// @match        http://javlib.com/*
-// @match        http://www.javlibrary.com/*
+// @match        https://www.javlibrary.com/*
 // @match        https://www.javbus.com/*
-// @match        https://avsox.website/*
+// @match        https://avsox.monster/*
 // @grant        GM_setClipboard
+// @license MIT
 // ==/UserScript==
 
 (function() {
