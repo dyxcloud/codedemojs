@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         jav tag copy
 // @namespace    https://github.com/dyxcloud
-// @version      0.5.3
+// @version      0.5.6
 // @description  获取页面的tag,返回带tag的文件名 "番号标题 #tag1 #tag2.."
 // @author       dyxlike
 // @match        https://www.javlibrary.com/*
@@ -23,7 +23,7 @@ function javlibGetter(){
     console.log("title="+title);
     result+=title;
 
-    //获取start
+    //获取star
     let starAs = document.querySelectorAll('span.star > a');
     console.log(starAs.length);
     if (starAs.length > 0) {
@@ -67,8 +67,8 @@ function javbusGetter(){
     console.log("title="+title);
     result+=title;
 
-    //获取start
-    let starAs = document.querySelectorAll('span.genre > a[href*="/star/');
+    //获取star
+    let starAs = document.querySelectorAll('span.genre > a[href*="/star/"');
     console.log(starAs.length);
     if (starAs.length > 0) {
         result += " ";
@@ -79,7 +79,7 @@ function javbusGetter(){
     }
 
     //获取tag
-    let tagAs = document.querySelectorAll('span.genre > a[href*="/genre/');
+    let tagAs = document.querySelectorAll('span.genre a[href*="/genre/"');
     console.log(tagAs.length);
     if(tagAs.length>0){
         result += " ";
@@ -124,12 +124,11 @@ function avsoxGetter(){
     }
 
     //获取tag
-    let tagSpans = document.querySelectorAll('.genre');
-    console.log(tagSpans.length);
-    if(tagSpans.length>0){
+    let tagAs = document.querySelectorAll('span.genre a[href*="/genre/"');
+    console.log(tagAs.length);
+    if(tagAs.length>0){
         result += " ";
-        for(let sp of tagSpans){
-            let a = sp.children[0];
+        for(let a of tagAs){
             console.log("tag="+a.text);
             result+=("#"+a.text);
         }
