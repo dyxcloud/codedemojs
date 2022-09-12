@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         jav tag copy
 // @namespace    https://github.com/dyxcloud
-// @version      0.5.6
+// @version      0.5.7
 // @description  获取页面的tag,返回带tag的文件名 "番号标题 #tag1 #tag2.."
 // @author       dyxlike
-// @match        https://www.javlibrary.com/*
-// @match        https://www.javbus.com/*
-// @match        https://avsox.monster/*
+// @include     *://*javlibrary.com/*
+// @include     *://*javlib.com/*
+// @include     *://*javbus.com/*
+// @include     *://*avsox.*/*
+// @include     *://*javdb.com*/*
 // @grant        GM_setClipboard
 // @license MIT
 // ==/UserScript==
@@ -16,7 +18,7 @@
 
 
 
-function javlibGetter(){
+function javLibGetter(){
     let result = '';
     //获取标题
     let title = document.querySelector('#video_title > h3').innerText;
@@ -25,7 +27,6 @@ function javlibGetter(){
 
     //获取star
     let starAs = document.querySelectorAll('span.star > a');
-    console.log(starAs.length);
     if (starAs.length > 0) {
         result += " ";
         for(let a of starAs){
@@ -36,7 +37,6 @@ function javlibGetter(){
 
     //获取tag
     let tagAs = document.querySelectorAll('span.genre > a');
-    console.log(tagAs.length);
     if(tagAs.length>0){
         result += " ";
         for(let a of tagAs){
@@ -47,20 +47,20 @@ function javlibGetter(){
     return result;
 }
 
-function javlib(){
-    let avname = document.createElement('a');
-    avname.innerText='点击复制tag文件名';
-    avname.href="#";
+function javLib(){
+    let button = document.createElement('a');
+    button.innerText='点击复制tag文件名';
+    button.href="#";
     let video_info = document.querySelector('#video_info');
-    video_info.append(avname);
+    video_info.append(button);
 
-    avname.onclick = function () {
-        let result = javlibGetter();
+    button.onclick = function () {
+        let result = javLibGetter();
         GM_setClipboard(result);
     };
 }
 
-function javbusGetter(){
+function javBusGetter(){
     let result = '';
     //获取标题
     let title = document.querySelector('body > div.container > h3').innerText;
@@ -68,8 +68,7 @@ function javbusGetter(){
     result+=title;
 
     //获取star
-    let starAs = document.querySelectorAll('span.genre > a[href*="/star/"');
-    console.log(starAs.length);
+    let starAs = document.querySelectorAll('span.genre > a[href*="/star/"]');
     if (starAs.length > 0) {
         result += " ";
         for(let a of starAs){
@@ -79,8 +78,7 @@ function javbusGetter(){
     }
 
     //获取tag
-    let tagAs = document.querySelectorAll('span.genre a[href*="/genre/"');
-    console.log(tagAs.length);
+    let tagAs = document.querySelectorAll('span.genre a[href*="/genre/"]');
     if(tagAs.length>0){
         result += " ";
         for(let a of tagAs){
@@ -91,29 +89,28 @@ function javbusGetter(){
     return result;
 }
 
-function javbus(){
-    let avname = document.createElement('a');
-    avname.innerText='点击复制tag文件名';
-    avname.href="#";
+function javBus(){
+    let button = document.createElement('a');
+    button.innerText='点击复制tag文件名';
+    button.href="#";
     let video_info = document.querySelector('body > div.container > div.row.movie > div.col-md-3.info');
-    video_info.append(avname);
+    video_info.append(button);
 
-    avname.onclick = function () {
-        let result = javbusGetter();
+    button.onclick = function () {
+        let result = javBusGetter();
         GM_setClipboard(result);
     };
 }
 
-function avsoxGetter(){
+function avSoxGetter(){
     let result = '';
     //获取标题
     let title = document.querySelector('body > div.container > h3').innerText;
     console.log("title="+title);
     result+=title;
 
-    //获取start
+    //获取star
     let starAs = document.querySelectorAll('#avatar-waterfall > a');
-    console.log(starAs.length);
     if (starAs.length > 0) {
         result += " ";
         for(let a of starAs){
@@ -124,8 +121,7 @@ function avsoxGetter(){
     }
 
     //获取tag
-    let tagAs = document.querySelectorAll('span.genre a[href*="/genre/"');
-    console.log(tagAs.length);
+    let tagAs = document.querySelectorAll('span.genre a[href*="/genre/"]');
     if(tagAs.length>0){
         result += " ";
         for(let a of tagAs){
@@ -137,28 +133,80 @@ function avsoxGetter(){
     return result;
 }
 
-function avsox(){
-    let avname = document.createElement('a');
-    avname.innerText='点击复制tag文件名';
-    avname.href="#";
+function avSox(){
+    let button = document.createElement('a');
+    button.innerText='点击复制tag文件名';
+    button.href="#";
     let video_info = document.querySelector("div.col-md-3.info");
-    video_info.append(avname);
+    video_info.append(button);
 
-    avname.onclick = function () {
-        let result = avsoxGetter();
+    button.onclick = function () {
+        let result = avSoxGetter();
         GM_setClipboard(result);
     };
 }
 
+
+    function javDbGetter(){
+        let result = '';
+        //获取标题
+        let title = document.querySelector('.title.is-4').innerText;
+        console.log("title="+title);
+        result+=title;
+
+        //获取star
+        let starAs = document.querySelectorAll('nav.panel.movie-panel-info a[href*="/actors/"]');
+        if (starAs.length > 0) {
+            result += " ";
+            for(let a of starAs){
+                console.log("star="+a.text);
+                result+=("#"+a.text);
+            }
+        }
+
+        //获取tag
+        let tagAs = document.querySelectorAll('nav.panel.movie-panel-info a[href*="/tags"]');
+        if(tagAs.length>0){
+            result += " ";
+            for(let a of tagAs){
+                console.log("tag="+a.text);
+                result+=("#"+a.text);
+            }
+        }
+        return result;
+    }
+
+    function javDb(){
+        let button = document.createElement('a');
+        button.innerText='点击复制tag文件名';
+        button.href="#";
+        let video_info = document.querySelector(".panel.movie-panel-info");
+        video_info.append(button);
+        button.onclick = function () {
+            let result = javDbGetter();
+            GM_setClipboard(result);
+        };
+        video_info.append(document.createElement('br'));
+        let button2 = document.createElement('a');
+        button2.innerText='点击复制tag文件名(#无码)';
+        button2.href="#";
+        video_info.append(button2);
+        button2.onclick = function () {
+            let result = javDbGetter();
+            GM_setClipboard(result+'#无码');
+        };
+    }
     
 function main(){
     let title = document.title;
     if ((/JAVLib/g).test(title)) {
-        javlib();
+        javLib();
     } else if ((/JavBus/g).test(title)) {
-        javbus();
+        javBus();
     } else if ((/AVSOX/g).test(title)) {
-        avsox();
+        avSox();
+    } else if ((/JavDB/g).test(title)) {
+        javDb();
     }
 }
 
