@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         jav tag copy
 // @namespace    https://github.com/dyxcloud
-// @version      0.5.7
+// @version      0.5.7.1
 // @description  获取页面的tag,返回带tag的文件名 "番号标题 #tag1 #tag2.."
 // @author       dyxlike
 // @include     *://*javlibrary.com/*
@@ -36,7 +36,7 @@ function javLibGetter(){
     }
 
     //获取tag
-    let tagAs = document.querySelectorAll('span.genre > a');
+    let tagAs = document.querySelectorAll('#video_genres span.genre > a');
     if(tagAs.length>0){
         result += " ";
         for(let a of tagAs){
