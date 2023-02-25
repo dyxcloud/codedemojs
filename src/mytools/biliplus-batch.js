@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         biliplus弹幕文件批量下载
 // @namespace    https://github.com/dyxcloud
-// @version      0.02
+// @version      0.03
 // @description  批量从biliplus下载某一个av号下所有分P的弹幕xml文件, 不用再一个一个点了, xml文件名是分P的名称
 // @author       dyxlike
 // @match        https://www.biliplus.com/video/*
@@ -56,7 +56,7 @@
         for (let [key, value] of nameMap.entries()) {
             let url = `https://comment.bilibili.com/${key}.xml`;
             let fileName = value.replace(/[/\\?%*:|"<>]/g, '-');
-            result += (key + '\t' + fileName)
+            result += (key + ' ' + fileName)
             result += '\r\n';
         }
         GM_setClipboard(result);
