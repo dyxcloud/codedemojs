@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         biliplus弹幕文件批量下载
 // @namespace    https://github.com/dyxcloud
-// @version      0.01
+// @version      0.02
 // @description  批量从biliplus下载某一个av号下所有分P的弹幕xml文件, 不用再一个一个点了, xml文件名是分P的名称
 // @author       dyxlike
 // @match        https://www.biliplus.com/video/*
 // @grant        GM_download
+// @grant        GM_setClipboard
 // @connect      *
 // @license MIT
 // ==/UserScript==
@@ -49,8 +50,20 @@
         }
     }
 
-    //生成下载按钮
+    async function copyCidMap() {
+        let nameMap = getNameMap();
+        let result = '';
+        for (let [key, value] of nameMap.entries()) {
+            let url = `https://comment.bilibili.com/${key}.xml`;
+            let fileName = value.replace(/[/\\?%*:|"<>]/g, '-');
+            result += (key + '\t' + fileName)
+            result += '\r\n';
+        }
+        GM_setClipboard(result);
+    }
+
     let topMenu = document.querySelector('.sidebar');
+    //生成下载按钮
     let newA = document.createElement('a');
     newA.innerText = "下载全部弹幕文件";
     newA.onclick = function () {
@@ -58,6 +71,15 @@
         return false;
     };
     topMenu.appendChild(newA);
+    topMenu.appendChild(document.createElement('br'));
+    //生成复制按钮
+    let newB = document.createElement('a');
+    newB.innerText = "复制分P的CID";
+    newB.onclick = function () {
+        copyCidMap();
+        return false;
+    };
+    topMenu.appendChild(newB);
 
 
 })();
