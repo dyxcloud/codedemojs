@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         坦克世界击杀环标伤数据排序 WOT world of tanks
+// @name         坦克世界击杀环标伤数据排序 (停止更新)
 // @name:en      World of Tanks Kill ring sort
 // @namespace    https://github.com/dyxcloud
 // @version      0.1.1
